@@ -87,5 +87,5 @@ redis-server.exe redis.windows.conf
 
 ![image-20250308175559582](C:\Users\18480\AppData\Roaming\Typora\typora-user-images\image-20250308175559582.png)
 
-修改图标、Tiltle
+修改图标、Tiltle、背景图片等。
 
