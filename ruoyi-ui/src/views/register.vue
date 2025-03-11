@@ -1,11 +1,17 @@
 <template>
   <div class="register">
     <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">智能健身教练平台</h3>
       <el-form-item prop="username">
         <el-input v-model="registerForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
         </el-input>
+      </el-form-item>
+      <el-form-item prop="userType" label="角色">
+        <el-radio-group v-model="registerForm.userType">
+          <el-radio label="11">教练</el-radio>
+          <el-radio label="22">学员</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item prop="password">
         <el-input
@@ -61,7 +67,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-register-footer">
-      <span>Copyright © 2018-2025 ruoyi.vip All Rights Reserved.</span>
+      <span>Copyright © 2024-2025 Bruce and Lee All Rights Reserved.</span>
     </div>
   </div>
 </template>
@@ -85,6 +91,7 @@ export default {
         username: "",
         password: "",
         confirmPassword: "",
+        userType: "11",
         code: "",
         uuid: ""
       },

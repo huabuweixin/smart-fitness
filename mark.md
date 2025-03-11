@@ -2,7 +2,7 @@
 
 文本、图片、视频、音频
 
-健身（识别是否标准）、历史（图片鉴定）
+健身（识别是否标准）
 
 ## 技术栈
 
@@ -88,4 +88,12 @@ redis-server.exe redis.windows.conf
 ![image-20250308175559582](C:\Users\18480\AppData\Roaming\Typora\typora-user-images\image-20250308175559582.png)
 
 修改图标、Tiltle、背景图片等。
+
+### 登录
+
+打开注册功能
+
+![image-20250310100344006](mark.assets/image-20250310100344006.png)
+
+#### 生成验证码
 
