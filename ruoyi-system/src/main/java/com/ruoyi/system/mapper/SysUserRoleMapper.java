@@ -59,4 +59,13 @@ public interface SysUserRoleMapper
      * @return 结果
      */
     public int deleteUserRoleInfos(@Param("roleId") Long roleId, @Param("userIds") Long[] userIds);
+    /**
+     * 根据账号和角色id创建用户和角色关联信息
+     *
+     * @param userName 账号
+     * @param roleId   角色id
+     * @return 结果
+     */
+    public int insertUserRoleByUserNameAndRoleId(@Param("userName") String userName, @Param("roleId") Long roleId);
+
 }

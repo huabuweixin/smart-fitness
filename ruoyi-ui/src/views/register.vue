@@ -9,8 +9,8 @@
       </el-form-item>
       <el-form-item prop="userType" label="角色">
         <el-radio-group v-model="registerForm.userType">
-          <el-radio label="11">教练</el-radio>
-          <el-radio label="22">学员</el-radio>
+          <el-radio label="11">学员</el-radio>
+          <el-radio label="22">教练</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item prop="password">

@@ -41,4 +41,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	        #{userId}
             </foreach> 
 	</delete>
+	<insert id="insertUserRoleByUserNameAndRoleId">
+		insert into sys_user_role(user_id, role_id)
+		select user_id, #{roleId}
+		from sys_user
+		where user_name = #{userName}
+		  and status = 0
+	</insert>
 </mapper> 
