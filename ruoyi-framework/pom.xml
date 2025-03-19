@@ -35,14 +35,14 @@
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- 验证码 -->
+        <!-- 更新Kaptcha依赖，排除旧版Servlet API -->
         <dependency>
             <groupId>pro.fessional</groupId>
             <artifactId>kaptcha</artifactId>
             <exclusions>
                 <exclusion>
                     <artifactId>servlet-api</artifactId>
-                    <groupId>javax.servlet</groupId>
+                    <groupId>jakarta.servlet</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

@@ -65,8 +65,9 @@ spring:
     restart:
       # 热部署开关
       enabled: true
+  data:
   # redis 配置
-  redis:
+   redis:
     # 地址
     host: localhost
     # 端口，默认为6379
