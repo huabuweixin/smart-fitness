@@ -5,6 +5,8 @@
         <h2>智能健身教练平台</h2>
 
 
+
+
       </el-col>
       <!-- 新增轮播图 -->
       <el-carousel :interval="2500" height="400px" indicator-position="outside">

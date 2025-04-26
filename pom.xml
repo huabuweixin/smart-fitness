@@ -247,7 +247,12 @@
                 <artifactId>ruoyi-system</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
-
+            <!-- 健身模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-fitness</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
@@ -271,6 +276,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-fitness</module>
     </modules>
     <packaging>pom</packaging>
 

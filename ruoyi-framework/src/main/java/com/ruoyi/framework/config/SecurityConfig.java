@@ -115,8 +115,10 @@ public class SecurityConfig
                             // 静态资源，可匿名访问
                             .requestMatchers(HttpMethod.GET, "/", "/*.html", "/**.html", "/**.css", "/**.js", "/profile/**").permitAll()
                             .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/druid/**").permitAll()
+                            .requestMatchers("/image/image/upload","/image/image").permitAll()
                             // 除上面外的所有请求全部需要鉴权认证
                             .anyRequest().authenticated();
+
                 })
                 // 添加Logout filter
                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler))
@@ -126,6 +128,7 @@ public class SecurityConfig
                 .addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class)
                 .addFilterBefore(corsFilter, LogoutFilter.class)
                 .build();
+
     }
 
     /**

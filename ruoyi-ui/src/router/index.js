@@ -47,6 +47,15 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/system/Tmanagement/detail',
+    component: () => import('@/views/system/Tmanagement/detail'),
+    name: 'TmanagementDetail',
+    meta: {
+      title: '教程详情',
+      activeMenu: '/system/Tmanagement' // 保持左侧菜单高亮
+    }
+  },
+  {
     path: '/register',
     component: () => import('@/views/register'),
     hidden: true
@@ -161,7 +170,26 @@ export const dynamicRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
-  }
+  },
+  // 在 dynamicRoutes 数组中添加
+   {
+     path: '/image/image',
+     component: Layout,
+     hidden: true,
+     permissions: ['image:image:list'], // 按需添加权限标识
+     children: [
+       {
+         path: 'index',
+         component: () => import('@/views/image/image/index.vue'),
+         name: 'ImageUpload',
+         meta: {
+           title: '图片上传',
+           activeMenu: '/image/list'
+         }
+       }
+     ]
+   },
+
 ]
 
 // 防止连续点击多次路由报错
@@ -175,6 +203,9 @@ Router.prototype.push = function push(location) {
 Router.prototype.replace = function push(location) {
   return routerReplace.call(this, location).catch(err => err)
 }
+
+
+
 
 export default new Router({
   mode: 'history', // 去掉url中的#

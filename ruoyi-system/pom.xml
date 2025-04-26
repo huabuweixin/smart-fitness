@@ -14,10 +14,13 @@
     <description>
         system系统模块
     </description>
-
     <dependencies>
 
         <!-- 通用工具-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common</artifactId>

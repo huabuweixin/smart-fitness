@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilde
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import com.fasterxml.jackson.core.JsonParser; // 新增导入
 
 /**
  * 程序注解配置
@@ -13,18 +14,21 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * @author ruoyi
  */
 @Configuration
-// 表示通过aop框架暴露该代理对象,AopContext能够访问
 @EnableAspectJAutoProxy(exposeProxy = true)
-// 指定要扫描的Mapper类的包的路径
 @MapperScan("com.ruoyi.**.mapper")
 public class ApplicationConfig
 {
     /**
-     * 时区配置
+     * 时区配置 + 允许JSON注释
      */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization()
     {
-        return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(TimeZone.getDefault());
+        return jacksonObjectMapperBuilder ->
+                jacksonObjectMapperBuilder
+                        // 设置默认时区
+                        .timeZone(TimeZone.getDefault())
+                        // 允许JSON注释（如：// 或 /* */）
+                        .featuresToEnable(JsonParser.Feature.ALLOW_COMMENTS); // 新增配置
     }
 }

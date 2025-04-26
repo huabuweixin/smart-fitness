@@ -1,5 +1,6 @@
 package com.ruoyi.framework.config;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,7 @@ import com.ruoyi.framework.interceptor.RepeatSubmitInterceptor;
 
 /**
  * 通用配置
- * 
+ *
  * @author ruoyi
  */
 @Configuration
@@ -30,9 +31,14 @@ public class ResourcesConfig implements WebMvcConfigurer
     public void addResourceHandlers(ResourceHandlerRegistry registry)
     {
         /** 本地文件上传路径 */
-        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
-                .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/");
+        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/upload/**")
+                .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/upload/");
+        // 获取上传视频存储路径（根据你的实际配置调整）---新增
+        String videoPath = RuoYiConfig.getProfile() + File.separator + "video" + File.separator;
 
+        registry.addResourceHandler("/video/**")
+                .addResourceLocations("file:" + videoPath)
+                .setCacheControl(CacheControl.maxAge(7, TimeUnit.DAYS));
         /** swagger配置 */
         registry.addResourceHandler("/swagger-ui/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
@@ -54,7 +60,10 @@ public class ResourcesConfig implements WebMvcConfigurer
     @Bean
     public CorsFilter corsFilter()
     {
+
         CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedMethod("OPTIONS"); // 允许OPTIONS方法
+        config.setAllowCredentials(true); // 允许凭证
         // 设置访问源地址
         config.addAllowedOriginPattern("*");
         // 设置访问源请求头

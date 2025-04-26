@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.BruceandLee.image.mapper.SysImageMapper">
+
+    <resultMap type="com.BruceandLee.image.domain.SysImage" id="SysImageResult">
+        <result property="imageId"    column="image_id"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="fileType"    column="file_type"    />
+        <result property="data"    column="data"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="filePath" column="image_path"/>
+    </resultMap>
+
+    <sql id="selectSysImageVo">
+        select image_id, file_name, file_type, data, create_by, create_time from sys_image
+    </sql>
+
+    <select id="selectSysImageList" parameterType="com.BruceandLee.image.domain.SysImage" resultMap="SysImageResult">
+        <include refid="selectSysImageVo"/>
+        <where>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="fileType != null  and fileType != ''"> and file_type = #{fileType}</if>
+            <if test="data != null  and data != ''"> and data = #{data}</if>
+        </where>
+    </select>
+
+    <select id="selectSysImageByImageId" parameterType="Long" resultMap="SysImageResult">
+        <include refid="selectSysImageVo"/>
+        where image_id = #{imageId}
+    </select>
+
+    <insert id="insertSysImage" parameterType="com.BruceandLee.image.domain.SysImage" useGeneratedKeys="true" keyProperty="imageId">
+        insert into sys_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileName != null and fileName != ''">file_name,</if>
+            <if test="fileType != null and fileType != ''">file_type,</if>
+            <if test="data != null and data != ''">data,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileName != null and fileName != ''">#{fileName},</if>
+            <if test="fileType != null and fileType != ''">#{fileType},</if>
+            <if test="data != null and data != ''">#{data},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysImage" parameterType="com.BruceandLee.image.domain.SysImage">
+        update sys_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileName != null and fileName != ''">file_name = #{fileName},</if>
+            <if test="fileType != null and fileType != ''">file_type = #{fileType},</if>
+            <if test="data != null and data != ''">data = #{data},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where image_id = #{imageId}
+    </update>
+
+    <delete id="deleteSysImageByImageId" parameterType="Long">
+        delete from sys_image where image_id = #{imageId}
+    </delete>
+
+    <delete id="deleteSysImageByImageIds" parameterType="String">
+        delete from sys_image where image_id in
+        <foreach item="imageId" collection="array" open="(" separator="," close=")">
+            #{imageId}
+        </foreach>
+    </delete>
+</mapper>
