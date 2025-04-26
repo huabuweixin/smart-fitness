@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.AiChatRecordMapper">
+
+    <resultMap type="AiChatRecord" id="AiChatRecordResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="sessionId"    column="session_id"    />
+        <result property="userInput"    column="user_input"    />
+        <result property="aiResponse"    column="ai_response"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="modelName"    column="model_name"    />
+    </resultMap>
+
+    <sql id="selectAiChatRecordVo">
+        select id, user_id, session_id, user_input, ai_response, create_time, model_name from ai_chat_record
+    </sql>
+
+    <select id="selectAiChatRecordList" parameterType="AiChatRecord" resultMap="AiChatRecordResult">
+        <include refid="selectAiChatRecordVo"/>
+        <where>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="sessionId != null  and sessionId != ''"> and session_id = #{sessionId}</if>
+            <if test="userInput != null  and userInput != ''"> and user_input = #{userInput}</if>
+            <if test="aiResponse != null  and aiResponse != ''"> and ai_response = #{aiResponse}</if>
+            <if test="modelName != null  and modelName != ''"> and model_name like concat('%', #{modelName}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectAiChatRecordById" parameterType="Long" resultMap="AiChatRecordResult">
+        <include refid="selectAiChatRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAiChatRecord" parameterType="AiChatRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into ai_chat_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="sessionId != null">session_id,</if>
+            <if test="userInput != null">user_input,</if>
+            <if test="aiResponse != null">ai_response,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modelName != null">model_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="sessionId != null">#{sessionId},</if>
+            <if test="userInput != null">#{userInput},</if>
+            <if test="aiResponse != null">#{aiResponse},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modelName != null">#{modelName},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAiChatRecord" parameterType="AiChatRecord">
+        update ai_chat_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="sessionId != null">session_id = #{sessionId},</if>
+            <if test="userInput != null">user_input = #{userInput},</if>
+            <if test="aiResponse != null">ai_response = #{aiResponse},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modelName != null">model_name = #{modelName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAiChatRecordById" parameterType="Long">
+        delete from ai_chat_record where id = #{id}
+    </delete>
+
+    <delete id="deleteAiChatRecordByIds" parameterType="String">
+        delete from ai_chat_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

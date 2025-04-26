@@ -131,9 +131,11 @@ xss:
   excludes: /system/notice,/system/Tmanagement
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
-# permit配置
-permit-all:
-  urls:
-    - "/image/image/list"
-    - "/image/image/download/**"
-    - "/image/image/upload"
+
+ai:
+  ollama:
+     base-url: http://localhost:11434
+     chat:
+        options:
+          model: qwen:0.5b
+
