@@ -65,4 +65,8 @@ public interface TutorialManagementMapper
      * @return 受影响的行数
      */
     public int updateStatusBatch(Long[] tutorialIds, int status);
+    /**
+     * 查询教程列表（含教练信息）
+     */
+    List<TutorialManagement> selectTutorialWithCoach();
 }

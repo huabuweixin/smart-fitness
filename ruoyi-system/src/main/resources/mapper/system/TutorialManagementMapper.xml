@@ -48,7 +48,23 @@
         <include refid="selectTutorialManagementVo"/>
         where tutorial_id = #{tutorialId}
     </select>
-
+<!--    查询教程对应的教练id-->
+    <select id="selectTutorialList" resultMap="TutorialManagementResult">
+        SELECT
+            t.*,
+            u.nick_name AS coach_name,
+            r.role_id,
+            r.role_name
+        FROM
+            tutorial_management t
+                LEFT JOIN
+            sys_user u ON t.coach_id = u.user_id
+                LEFT JOIN
+            sys_user_role ur ON u.user_id = ur.user_id
+                LEFT JOIN
+            sys_role r ON ur.role_id = r.role_id
+            ${ew.customSqlSegment}
+    </select>
     <insert id="insertTutorialManagement" parameterType="TutorialManagement" useGeneratedKeys="true" keyProperty="tutorialId">
         insert into tutorial_management
         <trim prefix="(" suffix=")" suffixOverrides=",">

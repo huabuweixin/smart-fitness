@@ -9,85 +9,12 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
-      <el-form-item label="教练" prop="coachId">
-        <el-select
-          v-model="queryParams.coachId"
-          placeholder="请选择教练"
-          clearable
-          @keyup.enter.native="handleQuery"
-        style="width: 200px"
-        >
-        <el-option
-          v-for="item in coachOptions"
-          :key="item.userId"
-          :label="item.userName"
-          :value="item.userId"
-        />
-        </el-select>
-      </el-form-item>
-
-
-<!--      <el-form-item label="价格" prop="price">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.price"-->
-<!--          placeholder="请输入价格"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-
-
-
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
-
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['system:Tmanagement:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['system:Tmanagement:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['system:Tmanagement:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['system:Tmanagement:export']"
-        >导出</el-button>
-      </el-col>
+    <el-row>
       <el-col :span="1.5">
         <el-button
           type="success"
@@ -144,24 +71,7 @@
         prop="status"
         :formatter="statusFormatter"
       />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:Tmanagement:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['system:Tmanagement:remove']"
-          >删除</el-button>
-        </template>
-      </el-table-column>
+
     </el-table>
 
     <pagination
@@ -172,56 +82,6 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改教程管理对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入标题" />
-        </el-form-item>
-        <el-form-item label="简介" prop="description">
-          <el-input v-model="form.description" placeholder="请输入简介" />
-        </el-form-item>
-        <el-form-item label="封面" prop="cover">
-          <el-upload
-            class="avatar-uploader"
-            :action="uploadUrl"
-          :show-file-list="false"
-          :on-success="handleCoverSuccess"
-          :before-upload="beforeCoverUpload"
-          :headers="uploadHeaders"
-          >
-          <img v-if="form.cover" :src="form.cover" class="avatar" />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-        <!-- 修改教练选择下拉框部分 -->
-        <template>
-          <el-form-item label="选择教练" prop="coachId">
-            <el-select
-              v-model="form.coachId"
-              placeholder="请选择教练"
-              clearable
-              @change="handleCoachChange"
-            >
-              <el-option
-                v-for="item in coachOptions"
-                :key="item.userId"
-                :label="item.userName"
-                :value="item.userId"
-              />
-            </el-select>
-          </el-form-item>
-        </template>
-        <el-form-item label="内容">
-          <editor v-model="form.content" :min-height="192"/>
-        </el-form-item>
-
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -313,7 +173,7 @@ export default {
     handleCoachChange(val) {
       this.form.coachId = val;
     }
-,
+    ,
     statusFormatter(row, column, cellValue) {
       // 处理数据库null值
       const status = cellValue === null ? 0 : cellValue;
@@ -429,7 +289,6 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm("queryForm");
-      this.queryParams.coachId = null;  // 增加重置教练选择
       this.handleQuery();
     },
     // 多选框选中数据

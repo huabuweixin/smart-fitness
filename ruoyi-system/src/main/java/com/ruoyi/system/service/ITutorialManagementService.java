@@ -64,5 +64,8 @@ public interface ITutorialManagementService
      * @param status 新状态值（1-上架，2-下架）
      */
     int updateStatusBatch(Long[] tutorialIds, int status);
-
+    /**
+     * 获取带教练信息的教程列表
+     */
+    List<TutorialManagement> selectTutorialWithCoach();
 }

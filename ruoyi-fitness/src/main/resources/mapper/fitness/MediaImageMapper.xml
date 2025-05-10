@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.fitness.mapper.MediaImageMapper">
+    
+    <resultMap type="MediaImage" id="MediaImageResult">
+        <result property="imageId"    column="image_id"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="storagePath"    column="storage_path"    />
+        <result property="fileSize"    column="file_size"    />
+        <result property="fileType"    column="file_type"    />
+        <result property="uploadTime"    column="upload_time"    />
+        <result property="uploaderId"    column="uploader_id"    />
+    </resultMap>
+
+    <sql id="selectMediaImageVo">
+        select image_id, file_name, storage_path, file_size, file_type, upload_time, uploader_id from media_image
+    </sql>
+
+    <select id="selectMediaImageList" parameterType="MediaImage" resultMap="MediaImageResult">
+        <include refid="selectMediaImageVo"/>
+        <where>  
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="storagePath != null  and storagePath != ''"> and storage_path = #{storagePath}</if>
+            <if test="fileSize != null "> and file_size = #{fileSize}</if>
+            <if test="fileType != null  and fileType != ''"> and file_type = #{fileType}</if>
+            <if test="uploadTime != null "> and upload_time = #{uploadTime}</if>
+            <if test="uploaderId != null "> and uploader_id = #{uploaderId}</if>
+        </where>
+    </select>
+    
+    <select id="selectMediaImageByImageId" parameterType="Long" resultMap="MediaImageResult">
+        <include refid="selectMediaImageVo"/>
+        where image_id = #{imageId}
+    </select>
+
+    <insert id="insertMediaImage" parameterType="MediaImage" useGeneratedKeys="true" keyProperty="imageId">
+        insert into media_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileName != null">file_name,</if>
+            <if test="storagePath != null">storage_path,</if>
+            <if test="fileSize != null">file_size,</if>
+            <if test="fileType != null">file_type,</if>
+            <if test="uploadTime != null">upload_time,</if>
+            <if test="uploaderId != null">uploader_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileName != null">#{fileName},</if>
+            <if test="storagePath != null">#{storagePath},</if>
+            <if test="fileSize != null">#{fileSize},</if>
+            <if test="fileType != null">#{fileType},</if>
+            <if test="uploadTime != null">#{uploadTime},</if>
+            <if test="uploaderId != null">#{uploaderId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMediaImage" parameterType="MediaImage">
+        update media_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="storagePath != null">storage_path = #{storagePath},</if>
+            <if test="fileSize != null">file_size = #{fileSize},</if>
+            <if test="fileType != null">file_type = #{fileType},</if>
+            <if test="uploadTime != null">upload_time = #{uploadTime},</if>
+            <if test="uploaderId != null">uploader_id = #{uploaderId},</if>
+        </trim>
+        where image_id = #{imageId}
+    </update>
+
+    <delete id="deleteMediaImageByImageId" parameterType="Long">
+        delete from media_image where image_id = #{imageId}
+    </delete>
+
+    <delete id="deleteMediaImageByImageIds" parameterType="String">
+        delete from media_image where image_id in 
+        <foreach item="imageId" collection="array" open="(" separator="," close=")">
+            #{imageId}
+        </foreach>
+    </delete>
+</mapper>

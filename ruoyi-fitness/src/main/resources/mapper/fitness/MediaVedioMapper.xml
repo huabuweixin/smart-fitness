@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.fitness.mapper.MediaVedioMapper">
+    
+    <resultMap type="MediaVedio" id="MediaVedioResult">
+        <result property="videoId"    column="video_id"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="storagePath"    column="storage_path"    />
+        <result property="fileSize"    column="file_size"    />
+        <result property="fileType"    column="file_type"    />
+        <result property="uploadTime"    column="upload_time"    />
+        <result property="uploaderId"    column="uploader_id"    />
+        <result property="duration"    column="duration"    />
+    </resultMap>
+
+    <sql id="selectMediaVedioVo">
+        select video_id, file_name, storage_path, file_size, file_type, upload_time, uploader_id, duration from media_vedio
+    </sql>
+
+    <select id="selectMediaVedioList" parameterType="MediaVedio" resultMap="MediaVedioResult">
+        <include refid="selectMediaVedioVo"/>
+        <where>  
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="storagePath != null  and storagePath != ''"> and storage_path = #{storagePath}</if>
+            <if test="fileSize != null "> and file_size = #{fileSize}</if>
+            <if test="fileType != null  and fileType != ''"> and file_type = #{fileType}</if>
+            <if test="uploadTime != null "> and upload_time = #{uploadTime}</if>
+            <if test="uploaderId != null "> and uploader_id = #{uploaderId}</if>
+            <if test="duration != null  and duration != ''"> and duration = #{duration}</if>
+        </where>
+    </select>
+    
+    <select id="selectMediaVedioByVideoId" parameterType="Long" resultMap="MediaVedioResult">
+        <include refid="selectMediaVedioVo"/>
+        where video_id = #{videoId}
+    </select>
+
+    <insert id="insertMediaVedio" parameterType="MediaVedio" useGeneratedKeys="true" keyProperty="videoId">
+        insert into media_vedio
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileName != null">file_name,</if>
+            <if test="storagePath != null">storage_path,</if>
+            <if test="fileSize != null">file_size,</if>
+            <if test="fileType != null">file_type,</if>
+            <if test="uploadTime != null">upload_time,</if>
+            <if test="uploaderId != null">uploader_id,</if>
+            <if test="duration != null">duration,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileName != null">#{fileName},</if>
+            <if test="storagePath != null">#{storagePath},</if>
+            <if test="fileSize != null">#{fileSize},</if>
+            <if test="fileType != null">#{fileType},</if>
+            <if test="uploadTime != null">#{uploadTime},</if>
+            <if test="uploaderId != null">#{uploaderId},</if>
+            <if test="duration != null">#{duration},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMediaVedio" parameterType="MediaVedio">
+        update media_vedio
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="storagePath != null">storage_path = #{storagePath},</if>
+            <if test="fileSize != null">file_size = #{fileSize},</if>
+            <if test="fileType != null">file_type = #{fileType},</if>
+            <if test="uploadTime != null">upload_time = #{uploadTime},</if>
+            <if test="uploaderId != null">uploader_id = #{uploaderId},</if>
+            <if test="duration != null">duration = #{duration},</if>
+        </trim>
+        where video_id = #{videoId}
+    </update>
+
+    <delete id="deleteMediaVedioByVideoId" parameterType="Long">
+        delete from media_vedio where video_id = #{videoId}
+    </delete>
+
+    <delete id="deleteMediaVedioByVideoIds" parameterType="String">
+        delete from media_vedio where video_id in 
+        <foreach item="videoId" collection="array" open="(" separator="," close=")">
+            #{videoId}
+        </foreach>
+    </delete>
+</mapper>

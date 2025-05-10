@@ -37,7 +37,7 @@ public class TutorialFitnessController extends BaseController
     /**
      * 查询健身教程列表
      */
-    @PreAuthorize("@ss.hasPermi('fitness:Tfitness:list')")
+    //@PreAuthorize("@ss.hasPermi('fitness:Tfitness:list')")
     @GetMapping("/list")
     public TableDataInfo list(TutorialFitness tutorialFitness)
     {

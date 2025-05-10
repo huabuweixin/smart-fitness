@@ -33,12 +33,12 @@ public class ResourcesConfig implements WebMvcConfigurer
         /** 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/upload/**")
                 .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/upload/");
-        // 获取上传视频存储路径（根据你的实际配置调整）---新增
-        String videoPath = RuoYiConfig.getProfile() + File.separator + "video" + File.separator;
-
-        registry.addResourceHandler("/video/**")
-                .addResourceLocations("file:" + videoPath)
-                .setCacheControl(CacheControl.maxAge(7, TimeUnit.DAYS));
+        /** 本地图片文件上传路径 */
+        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/images/**")
+                .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/images/");
+        /** 本地视频文件上传路径 */
+        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/videos/**")
+                .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/videos/");
         /** swagger配置 */
         registry.addResourceHandler("/swagger-ui/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")

@@ -1,6 +1,12 @@
 import request from '@/utils/request'
 import { parseStrEmpty } from "@/utils/ruoyi";
-
+// 根据角色获取用户列表
+export function listCoaches() {
+  return request({
+    url: '/system/user/coachList',
+    method: 'get'
+  })
+}
 // 查询用户列表
 export function listUser(query) {
   return request({

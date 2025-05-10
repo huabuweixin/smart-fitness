@@ -1,5 +1,8 @@
 package com.ruoyi.web.controller.system;
 import java.util.List;
+
+import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.common.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +37,21 @@ public class TutorialManagementController extends BaseController
     private ITutorialManagementService tutorialManagementService;
 
     /**
-     * 查询教程管理列表
+     * 查询教程管理列表,同时进行后端过滤
      */
-    @PreAuthorize("@ss.hasPermi('system:Tmanagement:list')")
+    //@PreAuthorize("@ss.hasPermi('system:Tmanagement:list')")默认所有人都有查询列表的权限，可以在数据库中的sys_menu表中添加再利用管理员进行分配
     @GetMapping("/list")
-    public TableDataInfo list(TutorialManagement tutorialManagement)
-    {
+    public TableDataInfo list(TutorialManagement tutorialManagement) {
+        // 获取当前登录用户
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        // 如果不是管理员角色，强制过滤教练ID
+        if (!loginUser.getUser().isAdmin()) {
+            tutorialManagement.setCoachId(loginUser.getUserId());
+        }
         startPage();
         List<TutorialManagement> list = tutorialManagementService.selectTutorialManagementList(tutorialManagement);
         return getDataTable(list);
     }
-
     /**
      * 导出教程管理列表
      */
@@ -118,6 +125,15 @@ public class TutorialManagementController extends BaseController
     @PostMapping("/unshelf")
     public AjaxResult unshelf(@RequestBody Long[] tutorialIds) {
         return toAjax(tutorialManagementService.updateStatusBatch(tutorialIds, 2));
+    }
+    /**
+     * 获取带教练信息的教程列表
+     */
+    @GetMapping("/listWithCoach")
+    public TableDataInfo listWithCoach() {
+        startPage();
+        List<TutorialManagement> list = tutorialManagementService.selectTutorialWithCoach();
+        return getDataTable(list);
     }
 }
 

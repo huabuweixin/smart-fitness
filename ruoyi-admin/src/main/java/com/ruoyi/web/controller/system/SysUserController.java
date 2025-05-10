@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.system;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.ruoyi.system.domain.vo.CoachVO;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +36,14 @@ import com.ruoyi.system.service.ISysUserService;
 
 /**
  * 用户信息
- * 
+ *
  * @author ruoyi
  */
 @RestController
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController
 {
+
     @Autowired
     private ISysUserService userService;
 
@@ -52,7 +55,14 @@ public class SysUserController extends BaseController
 
     @Autowired
     private ISysPostService postService;
-
+    /**
+     * 根据角色获取用户列表（教练）
+     */
+    @GetMapping("/coachList")
+    public AjaxResult coachList() {
+        List<CoachVO> list = userService.selectCoachList();
+        return AjaxResult.success(list);
+    }
     /**
      * 获取用户列表
      */

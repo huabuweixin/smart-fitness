@@ -50,10 +50,7 @@ export const constantRoutes = [
     path: '/system/Tmanagement/detail',
     component: () => import('@/views/system/Tmanagement/detail'),
     name: 'TmanagementDetail',
-    meta: {
-      title: '教程详情',
-      activeMenu: '/system/Tmanagement' // 保持左侧菜单高亮
-    }
+    hidden: true
   },
   {
     path: '/register',

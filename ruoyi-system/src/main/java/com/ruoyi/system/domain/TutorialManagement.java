@@ -35,6 +35,8 @@ public class TutorialManagement extends BaseEntity
     @Excel(name = "指定教练")
     private Long coachId;
 
+
+
     /** 封面 */
     @Excel(name = "封面")
     private String cover;

@@ -1,7 +1,14 @@
 <template>
   <div class="app-container">
-    <el-page-header @back="goBack" content="教程详情">
-    </el-page-header>
+    <template>
+      <!-- 完全复刻 Element 页头样式 -->
+      <div class="el-page-header">
+        <div class="el-page-header__content">
+          教程详情
+          <slot></slot>
+        </div>
+      </div>
+    </template>
 
     <el-card shadow="never" class="mt-3">
       <div v-loading="loading" element-loading-text="加载中...">
@@ -134,5 +141,17 @@ methods: {
   justify-content: center;
   height: 100%;
   font-size: 14px;
+}
+.el-page-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  background: #fff;
+  border-bottom: 1px solid #ebeef5;
+}
+
+.el-page-header__content {
+  font-size: 18px;
+  color: #303133;
 }
 </style>

@@ -87,10 +87,19 @@ public class TutorialManagementServiceImpl implements ITutorialManagementService
     public int deleteTutorialManagementByTutorialId(Long tutorialId) {
         return tutorialManagementMapper.deleteTutorialManagementByTutorialId(tutorialId);
     }
-
+    /**
+     * 更新教程状态
+     */
     @Override
     @Transactional
     public int updateStatusBatch(Long[] tutorialIds, int status) {
         return tutorialManagementMapper.updateStatusBatch(tutorialIds, status);
+    }
+    /**
+     * 获取教练id
+     */
+    @Override
+    public List<TutorialManagement> selectTutorialWithCoach() {
+        return tutorialManagementMapper.selectTutorialWithCoach();
     }
 }

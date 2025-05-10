@@ -5,13 +5,14 @@ import org.springframework.stereotype.Component;
 
 /**
  * 读取项目相关配置
- * 
+ *
  * @author ruoyi
  */
 @Component
 @ConfigurationProperties(prefix = "ruoyi")
 public class RuoYiConfig
 {
+
     /** 项目名称 */
     private String name;
 
@@ -118,5 +119,13 @@ public class RuoYiConfig
     public static String getUploadPath()
     {
         return getProfile() + "/upload";
+    }
+    public static String getImagePath()
+    {
+        return getProfile() + "/images";
+    }
+    public static String getVideoPath()
+    {
+        return getProfile() + "/videos";
     }
 }

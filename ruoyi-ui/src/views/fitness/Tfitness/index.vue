@@ -10,14 +10,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="指定教练" prop="coachId">
-        <el-input
-          v-model="queryParams.coachId"
-          placeholder="请输入指定教练"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
 
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
