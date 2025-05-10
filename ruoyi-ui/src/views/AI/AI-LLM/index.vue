@@ -43,19 +43,26 @@ import axios from 'axios';
 import store from "@/store";
 export default {
   name: 'ChatWindow',
-  props: {
-    initialSessionId: {
-      type: String,
-      required: true
-    }
-  },
   data() {
     return {
       userMsg: '',
       history: [],
-      sessionId: this.initialSessionId,
+      sessionId: null,
       isSending: false
     };
+  },
+  created() {
+    // 根据用户ID生成sessionId
+    const userId = store.state.user.id;
+    const storageKey = `user_session_count_${userId}`;
+    
+    // 获取并递增打开次数
+    const count = parseInt(localStorage.getItem(storageKey)) || 0;
+    const newCount = count + 1;
+    
+    // 更新存储并设置sessionId
+    localStorage.setItem(storageKey, newCount);
+    this.sessionId = String(newCount);
   },
   methods: {
   async handleSubmit() {
@@ -75,7 +82,8 @@ export default {
 
       const payload = {
         userMsg: this.userMsg,
-        sessionId: this.sessionId
+        sessionId: this.sessionId,
+        userid:store.state.user.id
       };
 
       this.userMsg = ''; // 清空输入框
