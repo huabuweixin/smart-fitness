@@ -11,7 +11,7 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 26/04/2025 14:17:49
+ Date: 10/05/2025 14:55:41
 */
 
 SET NAMES utf8mb4;
@@ -43,7 +43,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2036 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2056 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -133,14 +133,13 @@ INSERT INTO `sys_menu` VALUES (1058, '导入代码', 116, 4, '#', '', '', '', 1,
 INSERT INTO `sys_menu` VALUES (1059, '预览代码', 116, 5, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', '2025-03-09 16:50:08', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1060, '生成代码', 116, 6, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', '2025-03-09 16:50:08', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2000, '智能AI教练', 0, 6, 'AI', NULL, NULL, '', 1, 0, 'M', '0', '0', NULL, '#', 'admin', '2025-04-07 09:44:43', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2001, 'AI对话', 2000, 1, 'AI-LLM', NULL, NULL, '', 1, 0, 'M', '0', '0', NULL, '#', 'admin', '2025-04-07 09:45:11', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2001, 'AI对话', 2000, 1, 'AI-LLM', 'AI/AI-LLM', NULL, '', 1, 0, 'C', '0', '0', 'AI:AI-LLM', '#', 'admin', '2025-04-07 09:45:11', 'admin', '2025-04-26 14:37:22', '');
 INSERT INTO `sys_menu` VALUES (2002, 'AI分析', 2000, 2, 'AI-Anly', NULL, NULL, '', 1, 0, 'M', '0', '0', NULL, '#', 'admin', '2025-04-07 09:46:38', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2003, '健身教程', 0, 4, 'fitness', NULL, NULL, '', 1, 0, 'M', '0', '0', '', 'education', 'admin', '2025-04-04 14:56:35', 'admin', '2025-04-25 15:04:39', '');
 INSERT INTO `sys_menu` VALUES (2004, '用户信息', 0, 5, 'Users', NULL, NULL, '', 1, 0, 'M', '0', '0', NULL, '#', 'admin', '2025-04-07 09:43:33', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2005, '健身教程T', 2003, 1, 'Fitness-Article', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '#', 'admin', '2025-04-07 09:39:58', 'admin', '2025-04-25 15:07:58', '');
 INSERT INTO `sys_menu` VALUES (2007, '学员信息', 2004, 1, 'Student', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '#', 'admin', '2025-04-07 09:43:54', 'admin', '2025-04-07 09:47:57', '');
 INSERT INTO `sys_menu` VALUES (2008, '教练信息', 2004, 2, 'Coach', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '#', 'admin', '2025-04-07 09:44:19', 'admin', '2025-04-07 09:48:11', '');
-INSERT INTO `sys_menu` VALUES (2014, '教程上传T', 2003, 2, 'Fitness-Upload', NULL, NULL, '', 1, 0, 'M', '0', '0', '', '#', 'admin', '2025-04-07 09:41:22', 'admin', '2025-04-25 15:08:05', '');
+INSERT INTO `sys_menu` VALUES (2014, '教程上传', 2003, 2, 'Fitness-Upload', 'fitness/Tuploads/index', NULL, '', 1, 0, 'C', '0', '0', 'fitness:Tfitness:upload', '#', 'admin', '2025-04-07 09:41:22', 'admin', '2025-04-30 16:20:50', '');
 INSERT INTO `sys_menu` VALUES (2015, '教程管理', 1, 1, 'Tmanagement', 'system/Tmanagement/index', NULL, '', 1, 0, 'C', '0', '0', 'system:Tmanagement:list', 'edit', 'admin', '2025-04-04 16:47:15', 'admin', '2025-04-04 17:35:22', '教程管理菜单');
 INSERT INTO `sys_menu` VALUES (2016, '教程管理查询', 2015, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:Tmanagement:query', '#', 'admin', '2025-04-04 16:47:15', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2017, '教程管理新增', 2015, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:Tmanagement:add', '#', 'admin', '2025-04-04 16:47:15', '', NULL, '');
@@ -153,5 +152,19 @@ INSERT INTO `sys_menu` VALUES (2032, '健身教程新增', 2030, 2, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (2033, '健身教程修改', 2030, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Tfitness:edit', '#', 'admin', '2025-04-25 17:16:10', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2034, '健身教程删除', 2030, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Tfitness:remove', '#', 'admin', '2025-04-25 17:16:10', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2035, '健身教程导出', 2030, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Tfitness:export', '#', 'admin', '2025-04-25 17:16:10', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2037, '教程上架', 2014, 1, '', '', NULL, '', 1, 0, 'F', '0', '0', 'system:Tmanagement:shelf', '#', 'admin', '2025-04-30 19:42:56', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2038, '教程下架', 2014, 2, '', '', NULL, '', 1, 0, 'F', '0', '0', 'system:Tmanagement:unshelf', '#', 'admin', '2025-04-30 19:42:56', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2039, '图片素材', 2003, 1, 'Mimage', 'fitness/Mimage/index', NULL, '', 1, 0, 'C', '0', '0', 'fitness:Mimage:list', '#', 'admin', '2025-05-02 16:04:23', 'admin', '2025-05-03 19:13:59', '图片素材菜单');
+INSERT INTO `sys_menu` VALUES (2040, '图片素材查询', 2039, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Mimage:query', '#', 'admin', '2025-05-02 16:04:23', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2041, '图片素材新增', 2039, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Mimage:add', '#', 'admin', '2025-05-02 16:04:23', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2042, '图片素材修改', 2039, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Mimage:edit', '#', 'admin', '2025-05-02 16:04:23', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2043, '图片素材删除', 2039, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Mimage:remove', '#', 'admin', '2025-05-02 16:04:23', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2044, '图片素材导出', 2039, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Mimage:export', '#', 'admin', '2025-05-02 16:04:23', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2050, '视频素材', 2003, 4, 'Mvideo', 'fitness/Mimage/test', NULL, '', 1, 0, 'C', '0', '0', 'fitness/Mvideo/list', '#', 'admin', '2025-05-03 19:16:58', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2051, '视频素材查询', 2050, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Mvedio:query', '#', 'admin', '2025-05-03 19:19:12', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2052, '视频素材新增', 2050, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Mvedio:add', '#', 'admin', '2025-05-03 19:19:12', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2053, '视频素材修改', 2050, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Mvedio:edit', '#', 'admin', '2025-05-03 19:19:12', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2054, '视频素材删除', 2050, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Mvedio:remove', '#', 'admin', '2025-05-03 19:19:12', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2055, '视频素材导出', 2050, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'fitness:Mvedio:export', '#', 'admin', '2025-05-03 19:19:12', '', NULL, '');
 
 SET FOREIGN_KEY_CHECKS = 1;
