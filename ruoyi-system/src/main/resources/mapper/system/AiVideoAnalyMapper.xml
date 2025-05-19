@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.AiVideoAnalyMapper">
+
+    <resultMap type="AiVideoAnaly" id="AiVideoAnalyResult">
+        <result property="id"    column="id"    />
+        <result property="originalPath"    column="original_path"    />
+        <result property="processedPath"    column="processed_path"    />
+        <result property="userId"    column="user_id"    />
+        <result property="mode"    column="mode"    />
+        <result property="status"    column="status"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="analysisResult"    column="analysis_result"    />
+    </resultMap>
+
+    <sql id="selectAiVideoAnalyVo">
+        select id, original_path, processed_path, user_id, mode, status, created_at, analysis_result from ai_video_analy
+    </sql>
+
+    <select id="selectAiVideoAnalyList" parameterType="AiVideoAnaly" resultMap="AiVideoAnalyResult">
+        <include refid="selectAiVideoAnalyVo"/>
+        <where>
+            <if test="originalPath != null  and originalPath != ''"> and original_path = #{originalPath}</if>
+            <if test="processedPath != null  and processedPath != ''"> and processed_path = #{processedPath}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="mode != null  and mode != ''"> and mode = #{mode}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="analysisResult != null  and analysisResult != ''"> and analysis_result = #{analysisResult}</if>
+        </where>
+    </select>
+
+    <select id="selectAiVideoAnalyById" parameterType="Long" resultMap="AiVideoAnalyResult">
+        <include refid="selectAiVideoAnalyVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAiVideoAnaly" parameterType="AiVideoAnaly">
+        insert into ai_video_analy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="originalPath != null and originalPath != ''">original_path,</if>
+            <if test="processedPath != null">processed_path,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="mode != null and mode != ''">mode,</if>
+            <if test="status != null">status,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="analysisResult != null">analysis_result,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="originalPath != null and originalPath != ''">#{originalPath},</if>
+            <if test="processedPath != null">#{processedPath},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="mode != null and mode != ''">#{mode},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="analysisResult != null">#{analysisResult},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAiVideoAnaly" parameterType="AiVideoAnaly">
+        update ai_video_analy
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="originalPath != null and originalPath != ''">original_path = #{originalPath},</if>
+            <if test="processedPath != null">processed_path = #{processedPath},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="mode != null and mode != ''">mode = #{mode},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="analysisResult != null">analysis_result = #{analysisResult},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAiVideoAnalyById" parameterType="Long">
+        delete from ai_video_analy where id = #{id}
+    </delete>
+
+    <delete id="deleteAiVideoAnalyByIds" parameterType="String">
+        delete from ai_video_analy where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

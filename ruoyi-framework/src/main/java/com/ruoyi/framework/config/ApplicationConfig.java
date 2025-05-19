@@ -3,10 +3,12 @@ package com.ruoyi.framework.config;
 import java.util.TimeZone;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import com.fasterxml.jackson.core.JsonParser; // 新增导入
+import org.springframework.web.client.RestTemplate;
 
 /**
  * 程序注解配置
@@ -31,4 +33,5 @@ public class ApplicationConfig
                         // 允许JSON注释（如：// 或 /* */）
                         .featuresToEnable(JsonParser.Feature.ALLOW_COMMENTS); // 新增配置
     }
+
 }

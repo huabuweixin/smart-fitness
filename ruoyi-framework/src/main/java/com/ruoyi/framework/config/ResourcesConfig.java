@@ -39,6 +39,9 @@ public class ResourcesConfig implements WebMvcConfigurer
         /** 本地视频文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/videos/**")
                 .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/videos/");
+        /**训练文件上传路径*/
+        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/processed/**")
+                .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/processed/");
         /** swagger配置 */
         registry.addResourceHandler("/swagger-ui/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
