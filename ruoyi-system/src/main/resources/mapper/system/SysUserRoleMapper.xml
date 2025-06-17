@@ -1,51 +1,116 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.SysUserRoleMapper">
 
+	<!-- 公共结果映射 -->
 	<resultMap type="SysUserRole" id="SysUserRoleResult">
-		<result property="userId"     column="user_id"      />
-		<result property="roleId"     column="role_id"      />
+		<result property="userId" column="user_id" />
+		<result property="roleId" column="role_id" />
 	</resultMap>
 
-	<delete id="deleteUserRoleByUserId" parameterType="Long">
-		delete from sys_user_role where user_id=#{userId}
-	</delete>
-	
-	<select id="countUserRoleByRoleId" resultType="Integer">
-	    select count(1) from sys_user_role where role_id=#{roleId}  
+	<!-- 公共SQL片段 -->
+	<sql id="selectSysUserRoleVo">
+		SELECT user_id, role_id FROM sys_user_role
+	</sql>
+
+	<!-- 查询用户角色关联列表 -->
+	<select id="selectSysUserRoleList" parameterType="SysUserRole" resultMap="SysUserRoleResult">
+		<include refid="selectSysUserRoleVo"/>
+		<where>
+			<if test="userId != null">AND user_id = #{userId}</if>
+			<if test="roleId != null">AND role_id = #{roleId}</if>
+		</where>
 	</select>
-	
-	<delete id="deleteUserRole" parameterType="Long">
- 		delete from sys_user_role where user_id in
- 		<foreach collection="array" item="userId" open="(" separator="," close=")">
- 			#{userId}
-        </foreach> 
- 	</delete>
-	
+
+	<!-- 根据用户ID查询用户角色关联 -->
+	<select id="selectSysUserRoleByUserId" parameterType="Long" resultMap="SysUserRoleResult">
+		<include refid="selectSysUserRoleVo"/>
+		WHERE user_id = #{userId}
+	</select>
+
+	<!-- 根据角色ID查询角色使用数量 -->
+	<select id="countUserRoleByRoleId" resultType="Integer">
+		SELECT COUNT(1) FROM sys_user_role WHERE role_id = #{roleId}
+	</select>
+
+	<!-- 插入用户角色关联 -->
+	<insert id="insertSysUserRole" parameterType="SysUserRole">
+		INSERT INTO sys_user_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">user_id,</if>
+			<if test="roleId != null">role_id,</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">#{userId},</if>
+			<if test="roleId != null">#{roleId},</if>
+		</trim>
+	</insert>
+
+	<!-- 根据账号和角色ID创建关联 -->
+	<insert id="insertUserRoleByUserNameAndRoleId">
+		INSERT INTO sys_user_role(user_id, role_id)
+		SELECT user_id, #{roleId}
+		FROM sys_user
+		WHERE user_name = #{userName} AND status = 0
+	</insert>
+
+	<!-- 批量插入用户角色关联 -->
 	<insert id="batchUserRole">
-		insert into sys_user_role(user_id, role_id) values
-		<foreach item="item" index="index" collection="list" separator=",">
-			(#{item.userId},#{item.roleId})
+		INSERT INTO sys_user_role(user_id, role_id) VALUES
+		<foreach item="item" collection="list" separator=",">
+			(#{item.userId}, #{item.roleId})
 		</foreach>
 	</insert>
-	
+
+	<!-- 更新用户角色关联 -->
+	<update id="updateSysUserRole" parameterType="SysUserRole">
+		UPDATE sys_user_role
+		<set>
+			<if test="roleId != null">role_id = #{roleId},</if>
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+	<!-- 删除用户所有角色关联 -->
+	<delete id="deleteUserRoleByUserId" parameterType="Long">
+		DELETE FROM sys_user_role WHERE user_id = #{userId}
+	</delete>
+
+	<!-- 删除特定用户角色关联 -->
+	<delete id="deleteSysUserRoleByUserId" parameterType="Long">
+		DELETE FROM sys_user_role WHERE user_id = #{userId}
+	</delete>
+
+	<!-- 批量删除用户角色关联 -->
+	<delete id="deleteUserRole" parameterType="Long">
+		DELETE FROM sys_user_role WHERE user_id IN
+		<foreach collection="array" item="userId" open="(" separator="," close=")">
+			#{userId}
+		</foreach>
+	</delete>
+
+	<!-- 批量删除用户角色关联 (同名方法重载) -->
+	<delete id="deleteSysUserRoleByUserIds" parameterType="Long">
+		DELETE FROM sys_user_role WHERE user_id IN
+		<foreach collection="array" item="userId" open="(" separator="," close=")">
+			#{userId}
+		</foreach>
+	</delete>
+
+	<!-- 删除特定用户角色关联信息 -->
 	<delete id="deleteUserRoleInfo" parameterType="SysUserRole">
-		delete from sys_user_role where user_id=#{userId} and role_id=#{roleId}
+		DELETE FROM sys_user_role
+		WHERE user_id = #{userId} AND role_id = #{roleId}
 	</delete>
-	
+
+	<!-- 批量取消授权用户角色 -->
 	<delete id="deleteUserRoleInfos">
-	    delete from sys_user_role where role_id=#{roleId} and user_id in
- 	    <foreach collection="userIds" item="userId" open="(" separator="," close=")">
- 	        #{userId}
-            </foreach> 
+		DELETE FROM sys_user_role
+		WHERE role_id = #{roleId} AND user_id IN
+		<foreach collection="userIds" item="userId" open="(" separator="," close=")">
+			#{userId}
+		</foreach>
 	</delete>
-	<insert id="insertUserRoleByUserNameAndRoleId">
-		insert into sys_user_role(user_id, role_id)
-		select user_id, #{roleId}
-		from sys_user
-		where user_name = #{userName}
-		  and status = 0
-	</insert>
-</mapper> 
+</mapper>

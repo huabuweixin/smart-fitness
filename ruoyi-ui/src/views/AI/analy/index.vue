@@ -15,7 +15,7 @@
       :data="{ 
         SavePath: Path.url,
         mode: mode,      
-        userId: userId || null   
+        userId: userId || 0   
       }"
       :on-success="handleVideoSuccess"
     >
@@ -49,7 +49,6 @@
 import store from "@/store";
 export default {
   name: 'AI分析',
-  userId: store.state.user.id,
   data() {
     return {
       mode: 'beginner',
@@ -59,6 +58,11 @@ export default {
       Path: {
         url: 'E:/smart-fitness/ai-fitness-trainer-using-mediapipe/shared_storage/upload'
       }
+    }
+  },
+   computed: {
+    currentUserId() {
+      return store.state.user.id; // 响应式获取用户ID
     }
   },
   methods: {

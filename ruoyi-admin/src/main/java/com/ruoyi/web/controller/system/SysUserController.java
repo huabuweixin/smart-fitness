@@ -66,7 +66,7 @@ public class SysUserController extends BaseController
     /**
      * 获取用户列表
      */
-    @PreAuthorize("@ss.hasPermi('system:user:list')")
+    @PreAuthorize("@ss.hasPermi('system:user:list') or @ss.hasPermi('imf:stu')or@ss.hasPermi('imf:coa')")
     @GetMapping("/list")
     public TableDataInfo list(SysUser user)
     {
@@ -76,7 +76,7 @@ public class SysUserController extends BaseController
     }
 
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
-    @PreAuthorize("@ss.hasPermi('system:user:export')")
+    @PreAuthorize("@ss.hasPermi('system:user:export')or @ss.hasPermi('imf:stu')or@ss.hasPermi('imf:coa')")
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysUser user)
     {
@@ -86,7 +86,7 @@ public class SysUserController extends BaseController
     }
 
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
-    @PreAuthorize("@ss.hasPermi('system:user:import')")
+    @PreAuthorize("@ss.hasPermi('system:user:import')or @ss.hasPermi('imf:stu')or@ss.hasPermi('imf:coa')")
     @PostMapping("/importData")
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
     {
@@ -107,7 +107,7 @@ public class SysUserController extends BaseController
     /**
      * 根据用户编号获取详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:user:query')")
+    @PreAuthorize("@ss.hasPermi('system:user:query')or @ss.hasPermi('imf:stu')or@ss.hasPermi('imf:coa')")
     @GetMapping(value = { "/", "/{userId}" })
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId)
     {
@@ -129,7 +129,7 @@ public class SysUserController extends BaseController
     /**
      * 新增用户
      */
-    @PreAuthorize("@ss.hasPermi('system:user:add')")
+    @PreAuthorize("@ss.hasPermi('system:user:add')or @ss.hasPermi('imf:stu')or@ss.hasPermi('imf:coa')")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysUser user)
@@ -156,7 +156,7 @@ public class SysUserController extends BaseController
     /**
      * 修改用户
      */
-    @PreAuthorize("@ss.hasPermi('system:user:edit')")
+    @PreAuthorize("@ss.hasPermi('system:user:edit')or @ss.hasPermi('imf:stu')or@ss.hasPermi('imf:coa')")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysUser user)
@@ -228,7 +228,7 @@ public class SysUserController extends BaseController
     /**
      * 根据用户编号获取授权角色
      */
-    @PreAuthorize("@ss.hasPermi('system:user:query')")
+    @PreAuthorize("@ss.hasPermi('system:user:query')or @ss.hasPermi('imf:stu')or@ss.hasPermi('imf:coa')")
     @GetMapping("/authRole/{userId}")
     public AjaxResult authRole(@PathVariable("userId") Long userId)
     {
@@ -243,7 +243,7 @@ public class SysUserController extends BaseController
     /**
      * 用户授权角色
      */
-    @PreAuthorize("@ss.hasPermi('system:user:edit')")
+    @PreAuthorize("@ss.hasPermi('system:user:edit')or @ss.hasPermi('imf:stu')or@ss.hasPermi('imf:coa')")
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PutMapping("/authRole")
     public AjaxResult insertAuthRole(Long userId, Long[] roleIds)
@@ -257,7 +257,7 @@ public class SysUserController extends BaseController
     /**
      * 获取部门树列表
      */
-    @PreAuthorize("@ss.hasPermi('system:user:list')")
+    @PreAuthorize("@ss.hasPermi('system:user:list')or @ss.hasPermi('imf:stu')or@ss.hasPermi('imf:coa')")
     @GetMapping("/deptTree")
     public AjaxResult deptTree(SysDept dept)
     {

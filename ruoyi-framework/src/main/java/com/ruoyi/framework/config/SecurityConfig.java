@@ -119,6 +119,7 @@ public class SecurityConfig
                                     "/websocket/**",
                                     "/AI/processed/**",  // 修改这里，添加AI前缀
                                     "/swagger-ui.html",
+                                    "/system/**",
                                     "/v3/api-docs/**",
                                     "/swagger-ui/**",
                                     "/druid/**"

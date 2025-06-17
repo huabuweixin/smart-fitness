@@ -117,7 +117,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="排序" align="center" prop="tutorialId" />
       <el-table-column label="标题" align="center" prop="title" />
-      <el-table-column label="简介" align="center" prop="description" />
+      <el-table-column label="简介" align="center" prop="description" show-overflow-tooltip/>
       <el-table-column label="封面" align="center" prop="cover">
         <template slot-scope="scope">
           <img :src="scope.row.cover" class="table-avatar" v-if="scope.row.cover" />

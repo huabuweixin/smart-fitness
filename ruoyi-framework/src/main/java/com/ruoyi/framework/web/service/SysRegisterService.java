@@ -19,8 +19,6 @@ import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
 
-import java.util.Objects;
-
 /**
  * 注册校验方法
  * 

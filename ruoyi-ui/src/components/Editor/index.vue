@@ -264,7 +264,7 @@ export default {
 
           // 构建素材列表
           this.imageList = rows.map(item => ({
-            url: process.env.VUE_APP_BASE_API + item.fileName, // 拼接完整URL
+            url: process.env.VUE_APP_BASE_API + item.storagePath, // 拼接完整URL
             name: item.fileName,                              // 文件名
             // 可根据需要扩展其他字段（如文件类型、上传时间等）
           }));
@@ -305,7 +305,7 @@ export default {
           const rows = Array.isArray(response.rows) ? response.rows : [];
           // 构建素材列表
           this.videoList = rows.map(item => ({
-            url: process.env.VUE_APP_BASE_API + item.fileName, // 拼接完整URL
+            url: process.env.VUE_APP_BASE_API + item.storagePath, // 拼接完整URL
             name: item.fileName,                              // 文件名
             // 可根据需要扩展其他字段（如文件类型、上传时间等）
           }));

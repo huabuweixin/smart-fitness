@@ -35,8 +35,12 @@ public class AiVideoController {
         Map<String,String> resultMap = new HashMap<>();
                 AiVideoAnaly record=new AiVideoAnaly();
                 record.setMode(mode);
-                //if(userId!=null)
-                //record.setUserId(Long.valueOf(userId));
+                if(userId=="null"){
+                    record.setUserId(0L);
+                }else{
+                    record.setUserId(Long.valueOf(userId));
+                }
+
         try{
             //获取文件后缀，因此此后端代码可接收一切文件，上传格式前端限定
             String fileExt = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1)

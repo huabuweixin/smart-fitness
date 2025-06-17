@@ -9,7 +9,22 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
+      <el-form-item label="教练" prop="coachId">
+        <el-select
+          v-model="queryParams.coachId"
+          placeholder="请选择教练"
+          clearable
+          @keyup.enter.native="handleQuery"
+          style="width: 200px"
+        >
+          <el-option
+            v-for="item in coachOptions"
+            :key="item.userId"
+            :label="item.userName"
+            :value="item.userId"
+          />
+        </el-select>
+      </el-form-item>
 
 
       <el-form-item>
@@ -51,12 +66,20 @@
 
             <!-- 创建日期（底部右侧） -->
             <div class="meta-info">
-              <!-- 其他元信息（如果有） -->
+
+              <!-- 新增教练和日期组合容器 -->
+              <div class="info-group">
+                <!-- 教练姓名显示 -->
+                <div class="coach-wrapper">
+                  <i class="el-icon-user-solid coach-icon"></i>
+                  <span class="coach-name">{{ findCoachName(scope.row.coachId) }}</span>
+                </div>
               <div class="date-wrapper">
                 <i class="el-icon-time date-icon"></i>
                 <span class="create-date">{{ scope.row.createTime }}</span>
               </div>
             </div>
+          </div>
           </div>
         </template>
       </el-table-column>
@@ -73,11 +96,12 @@
 
 <script>
 import { listTfitness, getTfitness, delTfitness, addTfitness, updateTfitness } from "@/api/fitness/Tfitness";
-
+import { listCoaches } from "@/api/system/user"; // 新增导入教练列表接口
 export default {
   name: "Tfitness",
   data() {
     return {
+      coachOptions: [],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -121,9 +145,17 @@ export default {
     };
   },
   created() {
-    this.getList();
+    // 修改created生命周期，先获取教练列表再获取数据
+    this.getCoachList().then(() => {
+      this.getList();
+    });
   },
   methods: {
+    // 新增教练姓名查找方法
+    findCoachName(coachId) {
+      const coach = this.coachOptions.find(item => item.userId === coachId);
+      return coach ? coach.userName : '未知教练';
+    },
     /** 查询健身教程列表 */
     getList() {
       this.loading = true;
@@ -131,6 +163,15 @@ export default {
         this.TfitnessList = response.rows;
         this.total = response.total;
         this.loading = false;
+      });
+    },
+    // 新增获取教练列表方法
+    getCoachList() {
+      return new Promise((resolve, reject) => {
+        listCoaches().then(response => {
+          this.coachOptions = response.data;
+          resolve();
+        }).catch(error => reject(error));
       });
     },
     // 取消按钮
@@ -173,7 +214,21 @@ export default {
   }
 };
 </script>
+
 <style scoped>
+  /* 新增教练图标样式 */
+.coach-icon {
+  color: #67C23A; /* 使用Element的成功色 */
+  font-size: 14px;
+  margin-right: 4px;
+}
+
+/* 新增教练姓名样式 */
+.coach-name {
+  font-size: 12px;
+  color: #909399;
+  margin-right: 16px; /* 与日期保持间距 */
+}
 /* 封面容器样式 */
 .cover-container {
   position: relative;
@@ -268,7 +323,6 @@ export default {
 }
 /* 新增右侧日期样式 */
 .date-wrapper {
-  margin-left: auto; /* 推到右侧 */
   display: flex;
   align-items: center;
   gap: 8px;
@@ -286,4 +340,13 @@ export default {
   color: #c0c4cc;
   font-size: 14px;
 }
+  .info-group {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* 元素间距 */
+    border-top: 1px solid #ebeef5;
+    padding-top: 12px;
+    margin-top: auto;
+    width: 100%;
+  }
 </style>
